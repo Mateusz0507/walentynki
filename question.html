@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Walentynki</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body style="background-color: rgb(252, 246, 252)">
+    <header>
+      <h1>Czy zostaniesz moją walentynką?</h1>
+    </header>
+    <main>
+      <div>
+        <image class="cat" src="flower.gif" />
+      </div>
+      <button id="yes-button" onclick="answer()">Tak</button>
+      <button id="no-button">Nie</button>
+    </main>
+
+    <script>
+      function answer() {
+        window.location.href = "answer.html";
+      }
+
+      const button = document.getElementById("no-button");
+      const d = 200;
+
+      function setRandomPosition() {
+        const maxX = window.innerWidth - button.offsetWidth;
+        const maxY = window.innerHeight - button.offsetHeight;
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        button.style.transition = "none";
+        button.style.left = `${randomX}px`;
+        button.style.top = `${randomY}px`;
+        setTimeout(() => {
+          button.style.transition = "all 0.2s ease";
+        }, 10);
+      }
+
+      document.addEventListener("mousemove", (event) => {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const buttonRect = button.getBoundingClientRect();
+        const buttonX = buttonRect.left + buttonRect.width / 2;
+        const buttonY = buttonRect.top + buttonRect.height / 2;
+        const distance = Math.sqrt(
+          (mouseX - buttonX) ** 2 + (mouseY - buttonY) ** 2
+        );
+
+        if (distance < d) {
+          const angle = Math.atan2(mouseY - buttonY, mouseX - buttonX);
+          const escapeDistance = (d - distance) ** 3 / (60 * d);
+
+          const offsetX = -Math.cos(angle) * escapeDistance;
+          const offsetY = -Math.sin(angle) * escapeDistance;
+
+          button.style.left = `${buttonX + offsetX - buttonRect.width / 2}px`;
+          button.style.top = `${buttonY + offsetY - buttonRect.height / 2}px`;
+        }
+
+        const buttonRectNew = button.getBoundingClientRect();
+        if (
+          buttonRectNew.left <= 0 ||
+          buttonRectNew.right >= window.innerWidth ||
+          buttonRectNew.top <= 0 ||
+          buttonRectNew.bottom >= window.innerHeight
+        ) {
+          setRandomPosition();
+        }
+      });
+    </script>
+  </body>
+</html>

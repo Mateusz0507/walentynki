@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  background-color: pink;
+  color: white;
+  padding: 20px;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#hint {
+  display: none;
+  margin: 10px;
+}
+
+#yes-button {
+  position: relative;
+  left: -20px;
+}
+
+#no-button {
+  position: absolute;
+  transition: all 0.2s ease;
+}
+
+.cat {
+  max-width: 50vw;
+  max-height: 50vh;
+  object-fit: contain;
+}
